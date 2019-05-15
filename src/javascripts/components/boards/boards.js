@@ -1,6 +1,7 @@
 import boardData from '../../helpers/data/boardsData';
 import util from '../../helpers/util';
 import pins from '../pins/pins';
+import pinsData from '../../helpers/data/pinsData';
 
 // 7:30
 const seePinDiv = (e) => {
@@ -29,7 +30,8 @@ const domStringBuilder = (boards) => {
     domString += `<div id=${board.id} class="card board col-3">`;
     domString += `<h3 class="card-text"> ${board.name}"</h3>`;
     // 7:27 make button to display num of pins and take user to pins
-    domString += '<button class="btn btn-warning see-pins">Pins</button>';
+    domString += `<button class="btn btn-warning see-pins">
+    ${board.pins.length}Pins</button>`;
     domString += '</div>';
   });
   util.printToDom('user-boards', domString);
@@ -38,11 +40,14 @@ const domStringBuilder = (boards) => {
 
 const initBoards = () => {
   boardData.loadBoards()
-    .then((resp) => {
-      // console.error('resp', resp.data.boards);
-      // the spot where we know we have data back from the promise
-      domStringBuilder(resp.data.boards);
+    .then(resp => pinsData.getPinsForEachBoard(resp.data.boards))
+    .then((boardsWithPins) => {
+      domStringBuilder(boardsWithPins);
     })
-    .catch(err => console.error('error from loadBoards', err));
+
+    // console.error('resp', resp.data.boards);
+    // the spot where we know we have data back from the promise
+    .catch(err => console.error('error from initBoards requests', err));
 };
+
 export default { initBoards };

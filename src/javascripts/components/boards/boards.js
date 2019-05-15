@@ -1,5 +1,6 @@
 import boardData from '../../helpers/data/boardsData';
 import util from '../../helpers/util';
+import pins from '../pins/pins';
 
 // 7:30
 const seePinDiv = (e) => {
@@ -9,6 +10,8 @@ const seePinDiv = (e) => {
   // 7:33
   document.getElementById('boards-page').classList.add('hide');
   document.getElementById('pins-page').classList.remove('hide');
+  // 8:28
+  pins.initPins(boardId);
 };
 
 // 7:28

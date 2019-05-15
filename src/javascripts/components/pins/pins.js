@@ -1,6 +1,14 @@
 import pinsData from '../../helpers/data/pinsData';
 import util from '../../helpers/util';
 
+// 8:53
+const bindEvents = () => {
+  document.getElementById('toBoardsBtn').addEventListener('click', () => {
+    document.getElementById('boards-page').classList.remove('hide');
+    document.getElementById('pins-page').classList.add('hide');
+  });
+};
+
 // 8:49
 const writePins = (pins) => {
   let domString = '';
@@ -11,6 +19,7 @@ const writePins = (pins) => {
 };
 
 const initPins = (boardId) => {
+  bindEvents(); // 8:55
   pinsData.loadPinsForBoard(boardId)
     .then((pins) => {
       console.error('all pins', pins);
